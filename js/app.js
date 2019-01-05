@@ -3,27 +3,15 @@
 
 /*----- app's state (variables) -----*/
 let shuffledDeck, money, bet, playerHand, dealerHand;
-
-
-
-$dealerCards = $('.dealerCards');
-$playerCards = $('.playerCards');
-
 dealerHand = [];
 playerHand = [];
 
-
+/*----- cached element references -----*/
+$dealerCards = $('.dealerCards');
+$playerCards = $('.playerCards');
 
 $dealerCards.text(`Dealer cards: ${dealerHand}`);
 $playerCards.text(`Player cards: ${playerHand}`);
-
-console.log('Dealer hand:' + dealerHand);
-console.log('Player hand:' + playerHand);
-
-
-
-/*----- cached element references -----*/
-
 
 /*----- event listeners -----*/
 
@@ -39,25 +27,23 @@ function init() {
   render();
 }
 function deal() {
-
   let randomIndex = Math.floor((Math.random() * deck.length));
   let randomCard = deck[randomIndex];
   let splicedCard = deck.splice(randomIndex, 1)[0];
-  playerHand.push(splicedCard)
-  console.log(playerHand);
-  playerHand.forEach(function(card) {
-    let cardDiv = `<div class="card ${card.face}"></div>`;
-    $playerCards.append(cardDiv);
-})
-
+  playerHand.push(splicedCard);
+  render();
 }
 
 function computeSum (hand) {
-
 }
 
 function render() {
   // render playerHand
+  playerHand.forEach(function(card) {
+    let cardDiv = `<div class="card ${card.face}"></div>`;
+    $playerCards.append(cardDiv);
+  });
+
   // render dealterHand
 
 }
