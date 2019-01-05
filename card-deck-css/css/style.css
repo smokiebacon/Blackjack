@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  align-items: center;
+  text-align: center;
+}
+
+article {
+  margin-top: 49vh;
+}
+main {
+  border: 2px solid black;
+  background-image: url("https://www.clowerweb.com/cors/blackjack/table.png");
+  height: 60vh;
+}
+
+h1 {
+  color: gold;
+}
