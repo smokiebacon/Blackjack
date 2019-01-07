@@ -5,15 +5,24 @@
 body {
   align-items: center;
   text-align: center;
+  height: 100vh;
 }
 
-article {
-  margin-top: 49vh;
+.playerCards {
+  color: white;
 }
+
+.dealerCards {
+  color: white;
+}
+
 main {
   border: 2px solid black;
   background-image: url("https://www.clowerweb.com/cors/blackjack/table.png");
-  height: 60vh;
+  background-repeat: no-repeat;
+}
+section {
+  color: white;
 }
 
 h1 {

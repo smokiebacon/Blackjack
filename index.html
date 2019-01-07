@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="card-deck-css/css/cardstarter.css">
-  <link rel="stylesheet" href="card-deck-css/css/cardstarter.min.css">
-  <link rel="stylesheet" href="card-deck-css/css/style.css">
+  <link rel="stylesheet" href="css/card-deck-css/css/cardstarter.min.css">
+  <link rel="stylesheet" href="css/style.css">
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -14,20 +13,31 @@
   <title>Blackjack</title>
 </head>
 <body>
-
   <h1>Abe's Casino: Blackjack</h1>
- <main>
+  <main>
     <div class="deck"></div>
     <div class="dealerCards"></div>
     <div class="playerCards"></div>
-  <article>
-    <button class="hit">Hit!</button>
-    <button class="stay">Stay</button>
-    <button class="nextRound">Next Round</button>
-    <button class="newGame">Start a New Game?</button>
-  </article>
-</main>
+    <article id="deal-bet-btns">
+      <button class="deal">Deal!</button>
+      <aside>
+        <button class="1dollar">$1</button>
+        <button class="5dollar">$5</button>
+        <button class="25dollar">$25</button>
+        <button class="100dollar">$100</button>
+      </aside>
+    </article>
+    <article id="hit-stay-btns">
+      <button class="hit">Hit!</button>
+      <button class="stay">Stay</button>
+    </article>
+    <section>
+      Bet Amount: $<span id="bet"></span>
+      Bankroll: $<span id="bankroll"></span>
+    </section>
+  </main>
+  <script src="js/deck.js"></script>
+  <script src="js/app.js"></script>
 </body>
-<script src="js/deck.js"></script>
-<script src="js/app.js"></script>
+
 </html>

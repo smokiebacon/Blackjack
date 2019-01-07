@@ -1,77 +1,119 @@
 /*----- constants -----*/
-
-
 /*----- app's state (variables) -----*/
-let shuffledDeck, money, bet, playerHand, dealerHand;
-dealerHand = [];
-playerHand = [];
+let deck, bankroll, bet, playerHand, dealerHand, winner;
 
 /*----- cached element references -----*/
 $dealerCards = $('.dealerCards');
 $playerCards = $('.playerCards');
+$bet = $('#bet');
+$bankroll = $('#bankroll');
+$dealBetBtns = $('#deal-bet-btns');
+$hitStayBtns = $('#hit-stay-btns');
+$dealBtn = $('.deal');
 
-$dealerCards.text(`Dealer cards: ${dealerHand}`);
-$playerCards.text(`Player cards: ${playerHand}`);
-
+$dealerCards.text('Dealer cards: ');
+$playerCards.text('Player cards: ');
 /*----- event listeners -----*/
-
-//click hit, stay, or nextRound, or entireNewGame
-$('.hit').click(deal);
-
+//click hit, stay, doubledown, split
+$('#deal-bet-btns aside').on('click', 'button', handleBetClick);
+$dealBtn.click(deal);
 /*----- functions -----*/
 init();
-deal();
 
 function init() {
-  money = 1000;
+  dealerHand = [];
+  playerHand = [];
+  bet = 0;
+  bankroll = 1000;
+  //
   render();
 }
+
+function handleBetClick(e) {
+  let betAmount = parseInt(e.target.textContent.substr(1));
+  if (betAmount <= bankroll) {
+    bankroll -= betAmount;
+    bet += betAmount;
+    render();
+  }
+}
+
 function deal() {
+  deck = masterDeck.slice();
+  winner = null;
+  dealerHand = [];
+  playerHand = [];
+  playerHand.push(getCardFromDeck());
+  dealerHand.push(getCardFromDeck());
+  playerHand.push(getCardFromDeck());
+  dealerHand.push(getCardFromDeck());
+  computeSum();
+  // check for blackjack
+ render();
+}
+
+function getCardFromDeck() {
   let randomIndex = Math.floor((Math.random() * deck.length));
-  let randomCard = deck[randomIndex];
   let splicedCard = deck.splice(randomIndex, 1)[0];
-  playerHand.push(splicedCard);
-  render();
+  return splicedCard;
 }
 
-function computeSum (hand) {
+function computeSum() {
+  let dealerSum = dealerHand[0].value + dealerHand[1].value;
+  let playerSum = playerHand[0].value + playerHand[1].value;
+  console.log('Dealer Sum: ' + dealerSum);
+  console.log('Player Sum: ' + playerSum);
+//check for 21 //win condition
 }
 
+
+// if (dealerSum === 17) {
+//   //must stay
+//  }
+//   else if (dealerSum >= 22) {
+//   console.log('Dealer busted');
+//  }
+// if (playerSum >= 22) {
+//   console.log('You bust');
+// }
 function render() {
   // render playerHand
   playerHand.forEach(function(card) {
     let cardDiv = `<div class="card ${card.face}"></div>`;
     $playerCards.append(cardDiv);
   });
-
   // render dealterHand
+  dealerHand.forEach(function(card, idx) {
+    let cardDiv;
+    if (!winner && dealerHand.length && idx===0) {
+      cardDiv = `<div class="card back"></div>`;
+    } else {
+      cardDiv = `<div class="card ${card.face}"></div>`;
+    }
+    $dealerCards.append(cardDiv);
+  });
+  $bet.text(bet);
+  $bankroll.text(bankroll);
+  $dealBtn.prop("disabled", !bet);
+  (!winner || !playerHand.length) ? $dealBetBtns.show() : $dealBetBtns.hide();
+  (!winner && playerHand.length) ? $hitStayBtns.show() : $hitStayBtns.hide();
+  (!winner && playerHand.length) ? $dealBetBtns.hide() : $dealBetBtns.show();
 
 }
   //shuffle Deck
   //reset Deck
-
-
-
 //play()
 //calcHandValue()
 //discardPile
-
 //render();
-//****** IN RESPONSE TO USER INTERACTION (SUCH AS A CLICK)
- //--UPDATE ALL RELEVANT STATE
- // RENDER()
-
 
 //have a deck of cards
- //player can bet a number, or not play
+ //player can bet amount of money, or not play
 //deals to players first, with player getting 1 card
 //dealer get dealt a card (facedown)
 //players get dealt a card
 //dealer gets a card (faceup)
 //last player get a card
-
-
-
 //play function
  //calculate sumOfCards
  //first player gets to choose to hit or stay
@@ -84,10 +126,6 @@ function render() {
   //while sumOfCards <= 17, needs to hit.
    //if sumOfCards is 17 or less than 22, must stay
    //if deal hits 21 with first 2 cards, all players w/o 21 loses
-
-
 //winner
-
-
 //compare values
 //higher value <22 wins
